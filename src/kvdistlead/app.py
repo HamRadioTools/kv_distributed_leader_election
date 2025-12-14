@@ -53,7 +53,6 @@ renew_script = r.register_script(RENEW_LUA)
 #
 ###############################################################################
 
-
 def try_acquire() -> bool:
     """
     Try to obtain the distributed lock.
@@ -62,7 +61,8 @@ def try_acquire() -> bool:
         # SET with NX (only if not exists) and PX (expire in TTL_MS)
         return bool(r.set(LOCK_KEY, INSTANCE_ID, nx=True, px=TTL_MS))
     except redis.RedisError:
-        return False  # if Redis is unreachable or other errors occur
+        # if Redis is unreachable or other errors occur
+        return False
 
 
 def renew() -> bool:
@@ -73,7 +73,8 @@ def renew() -> bool:
         # Run Lua script to safely refresh TTL if we still own the lock
         return int(renew_script(keys=[LOCK_KEY], args=[INSTANCE_ID, str(TTL_MS)])) == 1
     except redis.RedisError:
-        return False  # if renewal fails on Redis errors
+        # if renewal fails on Redis errors
+        return False
 
 
 def open_telnet():
@@ -97,7 +98,6 @@ def close_telnet():
 # APPLICATION MAIN
 #
 ###############################################################################
-
 
 def main() -> None:
     """
