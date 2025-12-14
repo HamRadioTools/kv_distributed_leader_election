@@ -1,0 +1,33 @@
+[project]
+name = "kv-distributed-leader-election"
+version = "0.1.0"
+description = "Distributed leader election (for microservices) using k/v stores"
+authors = [
+    {name = "Jonathan González",email = "ea1het@ea1het.com"}
+]
+license = { text = "Mozilla Public License Version 2.0" }
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "redis (>=7.1.0,<8.0.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+packages = [{ include = "kvdistlead", from = "src" }]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^9.0.1"
+mypy = "^1.18.2"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.semantic_release]
+branch = "main"
+version_variables = ["src/*/__init__.py:__version__"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
