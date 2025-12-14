@@ -5,7 +5,7 @@
 
 """K/V Distributed Leader Election"""
 
-__updated__ = "2025-12-14 01:24:24"
+__updated__ = "2025-12-14 10:07:36"
 
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -65,7 +65,6 @@ def get_config() -> dict:
     """
     Return the 12-factor configuration as a dict used by the leader election loop.
     """
-
     # --- Leader lock parameters ---
     lock_key = get_required("LOCK_KEY")
     lock_ttl_ms = get_int("LOCK_TTL_MS", default=15000)
@@ -102,5 +101,4 @@ def get_config() -> dict:
 if __name__ == "__main__":
     # Handy for quick inspection
     from pprint import pprint
-
     pprint(get_config())
